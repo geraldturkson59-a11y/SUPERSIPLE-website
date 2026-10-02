@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>A Special Question</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff758c, #ffb199);
+    }
+
+    .screen {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    /* BIG RED HEART */
+
+    .heart {
+      width: 170px;
+      height: 170px;
+      background: red;
+      position: relative;
+      transform: rotate(-45deg);
+      cursor: pointer;
+      animation: heartbeat 1s infinite;
+      box-shadow: 0 0 45px rgba(255, 0, 0, .7);
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -85px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: 85px;
+    }
+
+    .heart-text {
+      position: absolute;
+      z-index: 5;
+      width: 250px;
+      left: -40px;
+      top: 65px;
+      color: white;
+      font-size: 23px;
+      font-weight: bold;
+      transform: rotate(45deg);
+    }
+
+    @keyframes heartbeat {
+
+      0%, 100% {
+        transform: rotate(-45deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(-45deg) scale(1.12);
+      }
+
+    }
+
+    /* QUESTION */
+
+    h1 {
+      color: #b00035;
+      font-size: 40px;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      border: none;
+      padding: 15px 35px;
+      border-radius: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #yes {
+      background: #e6003c;
+      color: white;
+    }
+
+    #no {
+      background: white;
+      color: #e6003c;
+    }
+
+    /* YES SCREEN */
+
+    #loveScreen {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: white;
+    }
+
+    #loveScreen h1 {
+      color: white;
+      font-size: 48px;
+    }
+
+    #loveScreen p {
+      font-size: 22px;
+    }
+
+    /* FALLING HEARTS */
+
+    .falling-heart {
+      position: fixed;
+      top: -40px;
+      width: 25px;
+      height: 25px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: fall linear forwards;
+    }
+
+    .falling-heart::before,
+    .falling-heart::after {
+      content: "";
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .falling-heart::before {
+      top: -12px;
+      left: 0;
+    }
+
+    .falling-heart::after {
+      top: 0;
+      left: 12px;
+    }
+
+    @keyframes fall {
+
+      from {
+        transform: translateY(-50px) rotate(-45deg);
+      }
+
+      to {
+        transform: translateY(110vh) rotate(315deg);
+      }
+
+    }
+
+    /* NO SCREEN */
+
+    .box {
+      width: min(90%, 450px);
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.2);
+    }
+
+    .box h1 {
+      margin-top: 0;
+      font-size: 32px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 15px;
+      border: 2px solid #ff8fa3;
+      border-radius: 15px;
+      font-size: 16px;
+      resize: none;
+      outline: none;
+    }
+
+    #send {
+      width: 100%;
+      margin-top: 15px;
+      background: #e6003c;
+      color: white;
+    }
+
+    #sent {
+      display: none;
+      color: #c00035;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- FIRST SCREEN -->
+
+  <section id="startScreen" class="screen active">
+
+    <div class="heart" onclick="openQuestion()">
+
+      <div class="heart-text">
+        CLICK ME
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- QUESTION SCREEN -->
+
+  <section id="questionScreen" class="screen">
+
+    <h1>
+      Will you be my girlfriend?
+    </h1>
+
+    <div class="buttons">
+
+      <button id="yes" onclick="sayYes()">
+        YES
+      </button>
+
+      <button id="no" onclick="sayNo()">
+        NO
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- YES SCREEN -->
+
+  <section id="loveScreen" class="screen">
+
+    <h1>
+      You said YES!
+    </h1>
+
+    <p>
+      You just made me very happy.
+    </p>
+
+  </section>
+
+
+  <!-- NO SCREEN -->
+
+  <section id="whyScreen" class="screen">
+
+    <div class="box">
+
+      <h1>
+        Why?
+      </h1>
+
+      <p>
+        Please tell me why.</p>
+
+      <textarea
+        id="reason"
+        placeholder="Write your answer here..."
+      ></textarea>
+
+      <button id="send" onclick="sendAnswer()">
+        SEND
+      </button>
+
+      <div id="sent">
+        Your answer has been received.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <script>
+
+    function showScreen(id) {
+
+      document
+        .querySelectorAll(".screen")
+        .forEach(function(screen) {
+
+          screen.classList.remove("active");
+
+        });
+
+      document
+        .getElementById(id)
+        .classList.add("active");
+
+    }
+
+
+    function openQuestion() {
+
+      showScreen("questionScreen");
+
+    }
+
+
+    function sayYes() {
+
+      showScreen("loveScreen");
+
+      setInterval(createHeart, 180);
+
+    }
+
+
+    function createHeart() {
+
+      const heart =
+        document.createElement("div");
+
+      heart.className =
+        "falling-heart";
+
+      heart.style.left =
+        Math.random() * 100 + "vw";
+
+      const size =
+        15 + Math.random() * 25;
+
+      heart.style.width =
+        size + "px";
+
+      heart.style.height =
+        size + "px";
+
+      heart.style.animationDuration =
+        3 + Math.random() * 4 + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(function() {
+
+        heart.remove();
+
+      }, 7000);
+
+    }
+
+
+    function sayNo() {
+
+      showScreen("whyScreen");
+
+    }
+
+
+    function sendAnswer() {
+
+      const answer =
+        document
+          .getElementById("reason")
+          .value
+          .trim();
+
+      if (answer === "") {
+
+        alert("Please tell me why.");
+
+        return;
+
+      }
+
+      document
+        .getElementById("sent")
+        .style.display = "block";
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>
